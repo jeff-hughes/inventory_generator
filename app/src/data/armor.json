@@ -1,0 +1,26 @@
+{
+    "category": "Armor",
+    "items": [
+        {"name": "Light Armor", "items": [
+            {"name": "Padded", "cost": {"value": 5, "type": "gp"}},
+            {"name": "Leather", "cost": {"value": 10, "type": "gp"}},
+            {"name": "Studded leather", "cost": {"value": 45, "type": "gp"}}
+        ]},
+        {"name": "Medium Armor", "items": [
+            {"name": "Hide", "cost": {"value": 10, "type": "gp"}},
+            {"name": "Chain shirt", "cost": {"value": 50, "type": "gp"}},
+            {"name": "Scale mail", "cost": {"value": 50, "type": "gp"}},
+            {"name": "Breastplate", "cost": {"value": 400, "type": "gp"}},
+            {"name": "Half plate", "cost": {"value": 750, "type": "gp"}}
+        ]},
+        {"name": "Heavy Armor", "items": [
+            {"name": "Ring mail", "cost": {"value": 30, "type": "gp"}},
+            {"name": "Chain mail", "cost": {"value": 75, "type": "gp"}},
+            {"name": "Splint", "cost": {"value": 200, "type": "gp"}},
+            {"name": "Plate", "cost": {"value": 1500, "type": "gp"}}
+        ]},
+        {"name": "Shield", "items": [
+            {"name": "Shield", "cost": {"value": 10, "type": "gp"}}
+        ]}
+    ]
+}
