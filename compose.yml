@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  app:
+    build:
+      context: ./app
+      target: dev
+    restart: always
+    # env_file: app.env
+    ports:
+      - 3000:3000
+    volumes:
+      - ./app/src:/usr/local/app/src
+      - ./app/public:/usr/local/app/public
