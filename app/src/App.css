@@ -1,3 +1,33 @@
+.inventory_table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.inventory_table th, .inventory_table td {
+    border: 1px #eee solid;
+    padding: 3px 10px;
+}
+
 .inventory_category {
+    background-color: #e2bf60;
     font-style: italic;
+}
+
+.inventory_prob_field,
+.inventory_min_qty_field,
+.inventory_max_qty_field {
+    text-align: right;
+    width: 60px;
+}
+
+table .table_left_align {
+    text-align: left;
+}
+
+table .table_center_align {
+    text-align: center;
+}
+
+table .table_right_align {
+    text-align: right;
 }
