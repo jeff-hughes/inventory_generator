@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
-import InventoryTable from "./inventory.js";
+import InventoryTable from "./inventory";
+import { CollapsingSection, Modal } from "./utilities";
 
 const armor = require("./data/armor.json");
 const weapons = require("./data/weapons.json");
@@ -10,11 +11,13 @@ const tools = require("./data/tools.json");
 class App extends React.Component {
     constructor(props) {
         super(props);
+
         // the refresh counter is not used to *count* anything, it just
         // needs to increment each time new random numbers need to be
         // generated, so all the child elements notice a change in their
         // props and can trigger a new roll of the dice
         this.state = {refreshQtyCounter: 0};
+
         this.handleButtonClick = this.handleButtonClick.bind(this);
     }
 
@@ -25,7 +28,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <h2>D&amp;D 5th Edition Merchant Inventory Generator</h2>
+                <h2>RPG Merchant Inventory Generator</h2>
                 <button type="button" onClick={this.handleButtonClick}>Generate Quantities</button>
                 <CollapsingSection title={armor.category}>
                     <InventoryTable data={armor} refreshQtyCounter={this.state.refreshQtyCounter} />
@@ -39,28 +42,20 @@ class App extends React.Component {
                 <CollapsingSection title={tools.category}>
                     <InventoryTable data={tools} refreshQtyCounter={this.state.refreshQtyCounter} />
                 </CollapsingSection>
+                <footer>
+                    <AboutModal />
+                </footer>
             </div>
         );
     }
 }
 
-function CollapsingSection(props) {
-    const [isCollapsed, setCollapsed] = useState(false);
-    let clss = "section";
-    let plus = "[-]";
-    if (isCollapsed) {
-        clss += " hidden";
-        plus = "[+]";
-    }
+function AboutModal() {
     return (
-        <div className="collapsing_section">
-            <div><a href="#" onClick={() => {
-                if (isCollapsed === true) setCollapsed(false); else setCollapsed(true);
-            }}>{plus}</a> {props.title}</div>
-            <div className={clss}>
-                {props.children}
-            </div>
-        </div>
+        <Modal linkText="About">
+            <p>This app was created by Jeff Hughes. All Wizards of the Coast content&mdash;the list of equipment, weapons, and armor and their statistics&mdash;was taken from the <a href="https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf" target="_blank">System Reference Document 5.1</a>, provided under terms of the <a href="ogl.html">Open Gaming License Version 1.0a</a>.</p>
+            <p>The code for the app is distributed under the <a href="https://github.com/jeff-hughes/inventory_generator/blob/master/LICENSE" target="_blank">GPLv3</a> license, and is available on <a href="https://github.com/jeff-hughes/inventory_generator" target="_blank">Github</a>. Suggestions and contributions are welcome; please open an issue or pull request there if you wish to contribute.</p>
+        </Modal>
     );
 }
 

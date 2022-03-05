@@ -7,12 +7,12 @@
         {"name": "Ammunition", "items": [
             {"name": "Arrows (20)", "cost": {"value": 1, "type": "gp"}, "weight": "1 lb."},
             {"name": "Blowgun needles (50)", "cost": {"value": 1, "type": "gp"}, "weight": "1 lb."},
-            {"name": "Crossbow bolts (20)", "cost": {"value": 1, "type": "sp"}, "weight": "1 1/2 lb."},
+            {"name": "Crossbow bolts (20)", "cost": {"value": 1, "type": "gp"}, "weight": "1 1/2 lb."},
             {"name": "Sling bullets (20)", "cost": {"value": 4, "type": "cp"}, "weight": "1 1/2 lb."}
         ]},
         {"name": "Antitoxin (vial)", "cost": {"value": 50, "type": "gp"}, "weight": null},
         {"name": "Arcane focus", "items": [
-            {"name": "Crystal, light", "cost": {"value": 10, "type": "gp"}, "weight": "1 lb."},
+            {"name": "Crystal", "cost": {"value": 10, "type": "gp"}, "weight": "1 lb."},
             {"name": "Orb", "cost": {"value": 20, "type": "gp"}, "weight": "3 lb."},
             {"name": "Rod", "cost": {"value": 10, "type": "gp"}, "weight": "2 lb."},
             {"name": "Staff", "cost": {"value": 5, "type": "gp"}, "weight": "4 lb."},
