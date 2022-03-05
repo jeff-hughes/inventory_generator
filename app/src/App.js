@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./App.css";
-import InventoryTable from './inventory.js';
+import InventoryTable from "./inventory.js";
 
-const armor = require('./data/armor.json');
+const armor = require("./data/armor.json");
+const weapons = require("./data/weapons.json");
+const adv_gear = require("./data/adventuring_gear.json");
+const tools = require("./data/tools.json");
 
 class App extends React.Component {
     constructor(props) {
@@ -26,6 +29,15 @@ class App extends React.Component {
                 <button type="button" onClick={this.handleButtonClick}>Generate Quantities</button>
                 <CollapsingSection title={armor.category}>
                     <InventoryTable data={armor} refreshQtyCounter={this.state.refreshQtyCounter} />
+                </CollapsingSection>
+                <CollapsingSection title={weapons.category}>
+                    <InventoryTable data={weapons} refreshQtyCounter={this.state.refreshQtyCounter} />
+                </CollapsingSection>
+                <CollapsingSection title={adv_gear.category}>
+                    <InventoryTable data={adv_gear} refreshQtyCounter={this.state.refreshQtyCounter} />
+                </CollapsingSection>
+                <CollapsingSection title={tools.category}>
+                    <InventoryTable data={tools} refreshQtyCounter={this.state.refreshQtyCounter} />
                 </CollapsingSection>
             </div>
         );

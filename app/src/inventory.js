@@ -9,16 +9,16 @@ function InventoryTable(props) {
 
     const rows = data.items.map((item, index) => {
         if ("items" in item) {
-            return <InventoryCategory data={item} extra_fields={extra_fields} refreshQtyCounter={props.refreshQtyCounter} key={index} />;
+            return <InventoryCategory data={item} extraFields={extra_fields} refreshQtyCounter={props.refreshQtyCounter} key={index} />;
         } else {
-            return <tbody><InventoryRow data={item} extra_fields={extra_fields} refreshQtyCounter={props.refreshQtyCounter} key={index} /></tbody>;
+            return <tbody><InventoryRow data={item} extraFields={extra_fields} refreshQtyCounter={props.refreshQtyCounter} key={index} /></tbody>;
         }
     });
 
     let extra_cols = [];
     if ("extra_fields" in data) {
-        for (let col in data["extra_fields"]) {
-            extra_cols.push(<th className="table_left_align" key={col}>{data["extra_fields"][col]}</th>);
+        for (let col in data.extra_fields) {
+            extra_cols.push(<th className="table_left_align" key={col}>{data.extra_fields[col]}</th>);
         }
     }
 
@@ -46,10 +46,10 @@ function InventoryTable(props) {
 
 function InventoryCategory(props) {
     let data = props.data;
-    let n_cols = 7 + Object.keys(props.extra_fields).length;
+    let n_cols = 7 + Object.keys(props.extraFields).length;
 
     const subitems = data.items.map((subitem, subindex) => 
-        <InventoryRow data={subitem} extra_fields={props.extra_fields} refreshQtyCounter={props.refreshQtyCounter} key={subindex} />
+        <InventoryRow data={subitem} extraFields={props.extraFields} isSubField={true} refreshQtyCounter={props.refreshQtyCounter} key={subindex} />
     );
     return (
         <tbody>
@@ -128,8 +128,13 @@ class InventoryRow extends React.Component {
         let data = this.props.data;
         let money = data.cost.value.toLocaleString("en-US");
 
+        let name_class = "table_left_align";
+        if (this.props.isSubField) {
+            name_class += " table_indent";
+        }
+
         let extra_cols = [];
-        for (let col in this.props.extra_fields) {
+        for (let col in this.props.extraFields) {
             let val = "--";
             if (data[col] !== null) {
                 val = data[col]
@@ -139,7 +144,7 @@ class InventoryRow extends React.Component {
 
         return (
             <tr>
-                <td className="table_left_align">{data.name}</td>
+                <td className={name_class}>{data.name}</td>
                 <td className="table_right_align">{money} {data.cost.type}</td>
                 <td className="table_right_align">{data.weight}</td>
                 <td className="table_right_align">

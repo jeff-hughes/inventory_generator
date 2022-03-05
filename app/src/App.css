@@ -18,7 +18,7 @@
 .inventory_min_qty_field,
 .inventory_max_qty_field {
     text-align: right;
-    width: 60px;
+    width: 50px;
 }
 
 table .table_left_align {
@@ -31,4 +31,8 @@ table .table_center_align {
 
 table .table_right_align {
     text-align: right;
+}
+
+table .table_indent {
+    padding-left: 30px;
 }
