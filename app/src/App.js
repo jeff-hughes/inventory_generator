@@ -7,25 +7,24 @@ const armor = require('./data/armor.json');
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {num: this.generateNumber()};
+        // the refresh counter is not used to *count* anything, it just
+        // needs to increment each time new random numbers need to be
+        // generated, so all the child elements notice a change in their
+        // props and can trigger a new roll of the dice
+        this.state = {refreshQtyCounter: 0};
         this.handleButtonClick = this.handleButtonClick.bind(this);
     }
 
-    generateNumber() {
-        return Math.random();
-    }
-
     handleButtonClick() {
-        this.setState({num: this.generateNumber()});
+        this.setState({refreshQtyCounter: this.state.refreshQtyCounter + 1});
     }
 
     render() {
         return (
             <div className="app">
                 <h2>D&amp;D 5th Edition Merchant Inventory Generator</h2>
-                <button type="button" onClick={this.handleButtonClick}>Button!</button>
-                <div>{this.state.num.toString()}</div>
-                <InventoryTable data={armor} />
+                <button type="button" onClick={this.handleButtonClick}>Generate Quantities</button>
+                <InventoryTable data={armor} refreshQtyCounter={this.state.refreshQtyCounter} />
             </div>
         );
     }
