@@ -2,14 +2,25 @@ import React from 'react';
 
 function InventoryTable(props) {
     let data = props.data;
+    let extra_fields = {};
+    if ("extra_fields" in data) {
+        extra_fields = data.extra_fields;
+    }
 
     const rows = data.items.map((item, index) => {
         if ("items" in item) {
-            return <InventoryCategory data={item} refreshQtyCounter={props.refreshQtyCounter} key={index} />;
+            return <InventoryCategory data={item} extra_fields={extra_fields} refreshQtyCounter={props.refreshQtyCounter} key={index} />;
         } else {
-            return <tbody><InventoryRow data={item} refreshQtyCounter={props.refreshQtyCounter} key={index} /></tbody>;
+            return <tbody><InventoryRow data={item} extra_fields={extra_fields} refreshQtyCounter={props.refreshQtyCounter} key={index} /></tbody>;
         }
     });
+
+    let extra_cols = [];
+    if ("extra_fields" in data) {
+        for (let col in data["extra_fields"]) {
+            extra_cols.push(<th className="table_left_align" key={col}>{data["extra_fields"][col]}</th>);
+        }
+    }
 
     return (
         <div className="inventory_container">
@@ -19,10 +30,12 @@ function InventoryTable(props) {
                     <tr>
                         <th className="table_left_align">Item</th>
                         <th className="table_right_align">Cost</th>
+                        <th className="table_right_align">Weight</th>
                         <th className="table_right_align">Probability</th>
                         <th className="table_right_align">Min. Qty</th>
                         <th className="table_right_align">Max. Qty</th>
                         <th className="table_right_align">Qty</th>
+                        {extra_cols}
                     </tr>
                 </thead>
                 {rows}
@@ -33,12 +46,14 @@ function InventoryTable(props) {
 
 function InventoryCategory(props) {
     let data = props.data;
+    let n_cols = 7 + Object.keys(props.extra_fields).length;
+
     const subitems = data.items.map((subitem, subindex) => 
-        <InventoryRow data={subitem} refreshQtyCounter={props.refreshQtyCounter} key={subindex} />
+        <InventoryRow data={subitem} extra_fields={props.extra_fields} refreshQtyCounter={props.refreshQtyCounter} key={subindex} />
     );
     return (
         <tbody>
-            <tr className="inventory_category"><td colSpan="6">{data.name}</td></tr>
+            <tr className="inventory_category"><td colSpan={n_cols}>{data.name}</td></tr>
             {subitems}
         </tbody>
     );
@@ -112,10 +127,21 @@ class InventoryRow extends React.Component {
     render() {
         let data = this.props.data;
         let money = data.cost.value.toLocaleString("en-US");
+
+        let extra_cols = [];
+        for (let col in this.props.extra_fields) {
+            let val = "--";
+            if (data[col] !== null) {
+                val = data[col]
+            }
+            extra_cols.push(<td className="table_left_align" key={col}>{val}</td>);
+        }
+
         return (
             <tr>
                 <td className="table_left_align">{data.name}</td>
                 <td className="table_right_align">{money} {data.cost.type}</td>
+                <td className="table_right_align">{data.weight}</td>
                 <td className="table_right_align">
                     <input type="text" className="inventory_prob_field" value={this.state.probability} onChange={this.handleFloat} />
                 </td>
@@ -128,6 +154,7 @@ class InventoryRow extends React.Component {
                 <td className="table_right_align">
                     {this.state.qty}
                 </td>
+                {extra_cols}
             </tr>
         );
     }

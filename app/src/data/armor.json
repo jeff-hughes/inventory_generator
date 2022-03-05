@@ -2,25 +2,26 @@
     "category": "Armor",
     "items": [
         {"name": "Light Armor", "items": [
-            {"name": "Padded", "cost": {"value": 5, "type": "gp"}},
-            {"name": "Leather", "cost": {"value": 10, "type": "gp"}},
-            {"name": "Studded leather", "cost": {"value": 45, "type": "gp"}}
+            {"name": "Padded", "cost": {"value": 5, "type": "gp"}, "weight": "8 lb.", "ac": "11 + Dex mod", "strength": null, "stealth": "Disadvantage"},
+            {"name": "Leather", "cost": {"value": 10, "type": "gp"}, "weight": "10 lb.", "ac": "11 + Dex mod", "strength": null, "stealth": null},
+            {"name": "Studded leather", "cost": {"value": 45, "type": "gp"}, "weight": "13 lb.", "ac": "12 + Dex mod", "strength": null, "stealth": null}
         ]},
         {"name": "Medium Armor", "items": [
-            {"name": "Hide", "cost": {"value": 10, "type": "gp"}},
-            {"name": "Chain shirt", "cost": {"value": 50, "type": "gp"}},
-            {"name": "Scale mail", "cost": {"value": 50, "type": "gp"}},
-            {"name": "Breastplate", "cost": {"value": 400, "type": "gp"}},
-            {"name": "Half plate", "cost": {"value": 750, "type": "gp"}}
+            {"name": "Hide", "cost": {"value": 10, "type": "gp"}, "weight": "12 lb.", "ac": "12 + Dex mod (max 2)", "strength": null, "stealth": null},
+            {"name": "Chain shirt", "cost": {"value": 50, "type": "gp"}, "weight": "20 lb.", "ac": "13 + Dex mod (max 2)", "strength": null, "stealth": null},
+            {"name": "Scale mail", "cost": {"value": 50, "type": "gp"}, "weight": "45 lb.", "ac": "14 + Dex mod (max 2)", "strength": null, "stealth": "Disadvantage"},
+            {"name": "Breastplate", "cost": {"value": 400, "type": "gp"}, "weight": "20 lb.", "ac": "14 + Dex mod (max 2)", "strength": null, "stealth": null},
+            {"name": "Half plate", "cost": {"value": 750, "type": "gp"}, "weight": "40 lb.", "ac": "15 + Dex mod (max 2)", "strength": null, "stealth": "Disadvantage"}
         ]},
         {"name": "Heavy Armor", "items": [
-            {"name": "Ring mail", "cost": {"value": 30, "type": "gp"}},
-            {"name": "Chain mail", "cost": {"value": 75, "type": "gp"}},
-            {"name": "Splint", "cost": {"value": 200, "type": "gp"}},
-            {"name": "Plate", "cost": {"value": 1500, "type": "gp"}}
+            {"name": "Ring mail", "cost": {"value": 30, "type": "gp"}, "weight": "40 lb.", "ac": "14", "strength": null, "stealth": "Disadvantage"},
+            {"name": "Chain mail", "cost": {"value": 75, "type": "gp"}, "weight": "55 lb.", "ac": "16", "strength": "Str 13", "stealth": "Disadvantage"},
+            {"name": "Splint", "cost": {"value": 200, "type": "gp"}, "weight": "60 lb.", "ac": "17", "strength": "Str 15", "stealth": "Disadvantage"},
+            {"name": "Plate", "cost": {"value": 1500, "type": "gp"}, "weight": "65 lb.", "ac": "18", "strength": "Str 15", "stealth": "Disadvantage"}
         ]},
         {"name": "Shield", "items": [
-            {"name": "Shield", "cost": {"value": 10, "type": "gp"}}
+            {"name": "Shield", "cost": {"value": 10, "type": "gp"}, "weight": "6 lb.", "ac": "+2", "strength": null, "stealth": null}
         ]}
-    ]
+    ],
+    "extra_fields": {"ac": "Armor Class (AC)", "strength": "Strength", "stealth": "Stealth"}
 }
