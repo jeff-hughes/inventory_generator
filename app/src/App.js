@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./App.css";
 import InventoryTable from './inventory.js';
 
@@ -24,10 +24,32 @@ class App extends React.Component {
             <div className="app">
                 <h2>D&amp;D 5th Edition Merchant Inventory Generator</h2>
                 <button type="button" onClick={this.handleButtonClick}>Generate Quantities</button>
-                <InventoryTable data={armor} refreshQtyCounter={this.state.refreshQtyCounter} />
+                <CollapsingSection title={armor.category}>
+                    <InventoryTable data={armor} refreshQtyCounter={this.state.refreshQtyCounter} />
+                </CollapsingSection>
             </div>
         );
     }
+}
+
+function CollapsingSection(props) {
+    const [isCollapsed, setCollapsed] = useState(false);
+    let clss = "section";
+    let plus = "[-]";
+    if (isCollapsed) {
+        clss += " hidden";
+        plus = "[+]";
+    }
+    return (
+        <div className="collapsing_section">
+            <div><a href="#" onClick={() => {
+                if (isCollapsed === true) setCollapsed(false); else setCollapsed(true);
+            }}>{plus}</a> {props.title}</div>
+            <div className={clss}>
+                {props.children}
+            </div>
+        </div>
+    );
 }
 
 export default App;
