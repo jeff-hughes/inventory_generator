@@ -46,8 +46,8 @@ footer {
     display: inline;
 }
 
-.modal_outer {
-    background-color: rgba(120,120,120,0.5);
+.modal_backdrop {
+    background-color: rgba(80,80,80,0.7);
     position: fixed;
     top: 0;
     left: 0;
@@ -55,15 +55,17 @@ footer {
     height: 100%;
 }
 
-.modal_inner {
+.modal {
     background-color: #fff;
     border: 1px #aaa solid;
     border-radius: 10px;
     box-shadow: 0px 0px 15px #888;
     margin: 0 auto;
     padding: 5px 20px;
-    position: relative;
+    position: fixed;
     top: 25%;
+    left: 0;
+    right: 0;
     text-align: left;
     width: 50%;
 }
@@ -79,6 +81,6 @@ footer {
     text-decoration: none;
 }
 
-.modal_inner p {
+.modal p {
     margin-top: 0;
 }

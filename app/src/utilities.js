@@ -39,20 +39,20 @@ export class Modal extends React.Component {
     }
 
     render() {
-        let cls_outer = "modal_outer";
-        let cls_inner = "modal_inner";
+        let cls_backdrop = "modal_backdrop";
+        let cls_inner = "modal";
         if (this.state.showModal === false) {
-            cls_outer = " hidden";
+            cls_backdrop = " hidden";
             cls_inner += " hidden";
         }
         return (
             <div className="modal_container">
                 <a href="#" onClick={this.handleOpen}>{this.props.linkText}</a>
-                <div className={cls_outer} onClick={this.handleClose}>
-                    <div className={cls_inner}>
-                        <div className="modal_close"><a href="#" onClick={this.handleClose}>&times;</a></div>
-                        {this.props.children}
-                    </div>
+                <div className={cls_backdrop} onClick={this.handleClose}>
+                </div>
+                <div className={cls_inner}>
+                    <div className="modal_close"><a href="#" onClick={this.handleClose}>&times;</a></div>
+                    {this.props.children}
                 </div>
             </div>
         );
