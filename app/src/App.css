@@ -2,6 +2,11 @@
     margin-bottom: 2em;
 }
 
+.collapsing_header a {
+    color: #000;
+    text-decoration: none;
+}
+
 .inventory_table {
     border-collapse: collapse;
     border-spacing: 0;

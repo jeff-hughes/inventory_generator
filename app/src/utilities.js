@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 
 export function CollapsingSection(props) {
-    const [isCollapsed, setCollapsed] = useState(false);
+    const [isCollapsed, setCollapsed] = useState(true);
     let clss = "section";
-    let plus = "[-]";
+    let plus = "[−]";
     if (isCollapsed) {
         clss += " hidden";
         plus = "[+]";
     }
     return (
         <div className="collapsing_section">
-            <div><a href="#" onClick={() => {
+            <div className="collapsing_header"><h3><a href="#" onClick={(e) => {
+                e.preventDefault();
                 if (isCollapsed === true) setCollapsed(false); else setCollapsed(true);
-            }}>{plus}</a> {props.title}</div>
+            }}>{plus} {props.title}</a></h3></div>
             <div className={clss}>
                 {props.children}
             </div>
