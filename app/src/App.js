@@ -1,5 +1,7 @@
 import React from "react";
 import "./App.css";
+
+import ProfileSection from "./profiles";
 import InventoryTable from "./inventory";
 import { CollapsingSection, Modal } from "./utilities";
 
@@ -29,19 +31,25 @@ class App extends React.Component {
         return (
             <div className="app">
                 <h2>RPG Merchant Inventory Generator</h2>
-                <button type="button" onClick={this.handleButtonClick}>Generate Quantities</button>
-                <CollapsingSection title={armor.category}>
-                    <InventoryTable data={armor} refreshQtyCounter={this.state.refreshQtyCounter} />
-                </CollapsingSection>
-                <CollapsingSection title={weapons.category}>
-                    <InventoryTable data={weapons} refreshQtyCounter={this.state.refreshQtyCounter} />
-                </CollapsingSection>
-                <CollapsingSection title={adv_gear.category}>
-                    <InventoryTable data={adv_gear} refreshQtyCounter={this.state.refreshQtyCounter} />
-                </CollapsingSection>
-                <CollapsingSection title={tools.category}>
-                    <InventoryTable data={tools} refreshQtyCounter={this.state.refreshQtyCounter} />
-                </CollapsingSection>
+
+                <ProfileSection />
+
+                <section className="inventory_section">
+                    <button type="button" onClick={this.handleButtonClick}>Generate Quantities</button>
+                    <CollapsingSection title={armor.category}>
+                        <InventoryTable data={armor} refreshQtyCounter={this.state.refreshQtyCounter} />
+                    </CollapsingSection>
+                    <CollapsingSection title={weapons.category}>
+                        <InventoryTable data={weapons} refreshQtyCounter={this.state.refreshQtyCounter} />
+                    </CollapsingSection>
+                    <CollapsingSection title={adv_gear.category}>
+                        <InventoryTable data={adv_gear} refreshQtyCounter={this.state.refreshQtyCounter} />
+                    </CollapsingSection>
+                    <CollapsingSection title={tools.category}>
+                        <InventoryTable data={tools} refreshQtyCounter={this.state.refreshQtyCounter} />
+                    </CollapsingSection>
+                </section>
+
                 <footer>
                     <AboutModal />
                 </footer>
