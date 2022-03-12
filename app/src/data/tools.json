@@ -1,46 +1,47 @@
 {
+    "id": "tools",
     "category": "Tools",
     "items": [
-        {"name": "Artisan's tools", "items": [
-            {"name": "Alchemist's supplies", "cost": {"value": 50, "type": "gp"}, "weight": "8 lb."},
-            {"name": "Brewer's supplies", "cost": {"value": 20, "type": "gp"}, "weight": "9 lb."},
-            {"name": "Calligrapher's supplies", "cost": {"value": 10, "type": "gp"}, "weight": "5 lb."},
-            {"name": "Carpenter's tools", "cost": {"value": 8, "type": "gp"}, "weight": "6 lb."},
-            {"name": "Cartographer's tools", "cost": {"value": 15, "type": "gp"}, "weight": "6 lb."},
-            {"name": "Cobbler's tools", "cost": {"value": 5, "type": "gp"}, "weight": "5 lb."},
-            {"name": "Cook's utensils", "cost": {"value": 1, "type": "gp"}, "weight": "8 lb."},
-            {"name": "Glassblower's tools", "cost": {"value": 30, "type": "gp"}, "weight": "5 lb."},
-            {"name": "Jeweler's tools", "cost": {"value": 25, "type": "gp"}, "weight": "2 lb."},
-            {"name": "Leatherworker's tools", "cost": {"value": 5, "type": "gp"}, "weight": "5 lb."},
-            {"name": "Mason's tools", "cost": {"value": 10, "type": "gp"}, "weight": "8 lb."},
-            {"name": "Painter's supplies", "cost": {"value": 10, "type": "gp"}, "weight": "5 lb."},
-            {"name": "Potter's tools", "cost": {"value": 10, "type": "gp"}, "weight": "3 lb."},
-            {"name": "Smith's tools", "cost": {"value": 20, "type": "gp"}, "weight": "8 lb."},
-            {"name": "Tinker's tools", "cost": {"value": 50, "type": "gp"}, "weight": "10 lb."},
-            {"name": "Weaver's tools", "cost": {"value": 1, "type": "gp"}, "weight": "5 lb."},
-            {"name": "Woodcarver's tools", "cost": {"value": 1, "type": "gp"}, "weight": "5 lb."}
+        {"id": "tools|0", "name": "Artisan's tools", "items": [
+            {"id": "tools|0|0", "name": "Alchemist's supplies", "cost": {"value": 50, "type": "gp"}, "weight": "8 lb."},
+            {"id": "tools|0|1", "name": "Brewer's supplies", "cost": {"value": 20, "type": "gp"}, "weight": "9 lb."},
+            {"id": "tools|0|2", "name": "Calligrapher's supplies", "cost": {"value": 10, "type": "gp"}, "weight": "5 lb."},
+            {"id": "tools|0|3", "name": "Carpenter's tools", "cost": {"value": 8, "type": "gp"}, "weight": "6 lb."},
+            {"id": "tools|0|4", "name": "Cartographer's tools", "cost": {"value": 15, "type": "gp"}, "weight": "6 lb."},
+            {"id": "tools|0|5", "name": "Cobbler's tools", "cost": {"value": 5, "type": "gp"}, "weight": "5 lb."},
+            {"id": "tools|0|6", "name": "Cook's utensils", "cost": {"value": 1, "type": "gp"}, "weight": "8 lb."},
+            {"id": "tools|0|7", "name": "Glassblower's tools", "cost": {"value": 30, "type": "gp"}, "weight": "5 lb."},
+            {"id": "tools|0|8", "name": "Jeweler's tools", "cost": {"value": 25, "type": "gp"}, "weight": "2 lb."},
+            {"id": "tools|0|9", "name": "Leatherworker's tools", "cost": {"value": 5, "type": "gp"}, "weight": "5 lb."},
+            {"id": "tools|0|10", "name": "Mason's tools", "cost": {"value": 10, "type": "gp"}, "weight": "8 lb."},
+            {"id": "tools|0|11", "name": "Painter's supplies", "cost": {"value": 10, "type": "gp"}, "weight": "5 lb."},
+            {"id": "tools|0|12", "name": "Potter's tools", "cost": {"value": 10, "type": "gp"}, "weight": "3 lb."},
+            {"id": "tools|0|13", "name": "Smith's tools", "cost": {"value": 20, "type": "gp"}, "weight": "8 lb."},
+            {"id": "tools|0|14", "name": "Tinker's tools", "cost": {"value": 50, "type": "gp"}, "weight": "10 lb."},
+            {"id": "tools|0|15", "name": "Weaver's tools", "cost": {"value": 1, "type": "gp"}, "weight": "5 lb."},
+            {"id": "tools|0|16", "name": "Woodcarver's tools", "cost": {"value": 1, "type": "gp"}, "weight": "5 lb."}
         ]},
-        {"name": "Disguise kit", "cost": {"value": 25, "type": "gp"}, "weight": "3 lb."},
-        {"name": "Forgery kit", "cost": {"value": 15, "type": "gp"}, "weight": "5 lb."},
-        {"name": "Gaming set", "items": [
-            {"name": "Dice set", "cost": {"value": 1, "type": "sp"}, "weight": null},
-            {"name": "Playing card set", "cost": {"value": 5, "type": "sp"}, "weight": null}
+        {"id": "tools|1", "name": "Disguise kit", "cost": {"value": 25, "type": "gp"}, "weight": "3 lb."},
+        {"id": "tools|2", "name": "Forgery kit", "cost": {"value": 15, "type": "gp"}, "weight": "5 lb."},
+        {"id": "tools|3", "name": "Gaming set", "items": [
+            {"id": "tools|3|0", "name": "Dice set", "cost": {"value": 1, "type": "sp"}, "weight": null},
+            {"id": "tools|3|1", "name": "Playing card set", "cost": {"value": 5, "type": "sp"}, "weight": null}
         ]},
-        {"name": "Herbalism kit", "cost": {"value": 5, "type": "gp"}, "weight": "3 lb."},
-        {"name": "Musical instrument", "items": [
-            {"name": "Bagpipes", "cost": {"value": 30, "type": "gp"}, "weight": "6 lb."},
-            {"name": "Drum", "cost": {"value": 6, "type": "gp"}, "weight": "3 lb."},
-            {"name": "Dulcimer", "cost": {"value": 25, "type": "gp"}, "weight": "10 lb."},
-            {"name": "Flute", "cost": {"value": 2, "type": "gp"}, "weight": "1 lb."},
-            {"name": "Lute", "cost": {"value": 35, "type": "gp"}, "weight": "2 lb."},
-            {"name": "Lyre", "cost": {"value": 30, "type": "gp"}, "weight": "2 lb."},
-            {"name": "Horn", "cost": {"value": 3, "type": "gp"}, "weight": "2 lb."},
-            {"name": "Pan flute", "cost": {"value": 12, "type": "gp"}, "weight": "2 lb."},
-            {"name": "Shawm", "cost": {"value": 2, "type": "gp"}, "weight": "1 lb."},
-            {"name": "Viol", "cost": {"value": 30, "type": "gp"}, "weight": "1 lb."}
+        {"id": "tools|4", "name": "Herbalism kit", "cost": {"value": 5, "type": "gp"}, "weight": "3 lb."},
+        {"id": "tools|5", "name": "Musical instrument", "items": [
+            {"id": "tools|5|0", "name": "Bagpipes", "cost": {"value": 30, "type": "gp"}, "weight": "6 lb."},
+            {"id": "tools|5|1", "name": "Drum", "cost": {"value": 6, "type": "gp"}, "weight": "3 lb."},
+            {"id": "tools|5|2", "name": "Dulcimer", "cost": {"value": 25, "type": "gp"}, "weight": "10 lb."},
+            {"id": "tools|5|3", "name": "Flute", "cost": {"value": 2, "type": "gp"}, "weight": "1 lb."},
+            {"id": "tools|5|4", "name": "Lute", "cost": {"value": 35, "type": "gp"}, "weight": "2 lb."},
+            {"id": "tools|5|5", "name": "Lyre", "cost": {"value": 30, "type": "gp"}, "weight": "2 lb."},
+            {"id": "tools|5|6", "name": "Horn", "cost": {"value": 3, "type": "gp"}, "weight": "2 lb."},
+            {"id": "tools|5|7", "name": "Pan flute", "cost": {"value": 12, "type": "gp"}, "weight": "2 lb."},
+            {"id": "tools|5|8", "name": "Shawm", "cost": {"value": 2, "type": "gp"}, "weight": "1 lb."},
+            {"id": "tools|5|9", "name": "Viol", "cost": {"value": 30, "type": "gp"}, "weight": "1 lb."}
         ]},
-        {"name": "Navigator's tools", "cost": {"value": 25, "type": "gp"}, "weight": "2 lb."},
-        {"name": "Poisoner's kit", "cost": {"value": 50, "type": "gp"}, "weight": "2 lb."},
-        {"name": "Thieves' tools", "cost": {"value": 25, "type": "gp"}, "weight": "1 lb."}
+        {"id": "tools|6", "name": "Navigator's tools", "cost": {"value": 25, "type": "gp"}, "weight": "2 lb."},
+        {"id": "tools|7", "name": "Poisoner's kit", "cost": {"value": 50, "type": "gp"}, "weight": "2 lb."},
+        {"id": "tools|8", "name": "Thieves' tools", "cost": {"value": 25, "type": "gp"}, "weight": "1 lb."}
     ]
 }

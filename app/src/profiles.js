@@ -24,11 +24,13 @@ class ProfileSection extends React.Component {
         let profile_name = "Profile " + num;
         options[new_id] = profile_name;
         this.setState({options: options, selected: new_id});
+        this.props.signalProfileChange(new_id);
     }
 
     changeProfile(profile_id) {
         if (profile_id in this.state.options) {
             this.setState({selected: profile_id});
+            this.props.signalProfileChange(profile_id);
         }
     }
 
@@ -88,7 +90,7 @@ class ProfileSelect extends React.Component {
 
         return (
             <div>
-                <label for="profiles">Profiles: </label>
+                <label htmlFor="profiles">Profiles: </label>
                 <select className="profiles" value={this.props.selected} onChange={this.handleChange}>
                     {options}
                     <option value="create_new">Create new profile...</option>
