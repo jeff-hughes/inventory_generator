@@ -1,4 +1,5 @@
 import React from 'react';
+import { cloneDeep } from "lodash";
 import { CollapsingSection } from "./utilities";
 
 class InventorySection extends React.Component {
@@ -11,50 +12,72 @@ class InventorySection extends React.Component {
         // props and can trigger a new roll of the dice
         this.state = {refreshQtyCounter: 0};
 
-        this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.handleGenQuantities = this.handleGenQuantities.bind(this);
     }
 
-    handleButtonClick() {
+    handleGenQuantities() {
         this.setState({refreshQtyCounter: this.state.refreshQtyCounter + 1});
     }
 
     render() {
-        let armor = this.props.profileData["armor"];
-        let weapons = this.props.profileData["weapons"];
-        let adv_gear = this.props.profileData["adv_gear"];
-        let tools = this.props.profileData["tools"];
+        let categories = Object.keys(this.props.profileData);
+        let sections = categories.map(cat => {
+            let data = this.props.profileData[cat];
+            return (
+                <CollapsingSection title={data.category} key={cat}>
+                    <InventoryTable
+                        data={data}
+                        signalItemChange={this.props.signalItemChange}
+                        refreshQtyCounter={this.state.refreshQtyCounter}
+                    />
+                </CollapsingSection>
+            );
+        });
         return (
             <section className="inventory_section">
-                <button type="button" onClick={this.handleButtonClick}>Generate Quantities</button>
-                <CollapsingSection title={armor.category}>
-                    <InventoryTable
-                        data={armor}
-                        signalItemChange={this.props.signalItemChange}
-                        refreshQtyCounter={this.state.refreshQtyCounter}
-                    />
-                </CollapsingSection>
-                <CollapsingSection title={weapons.category}>
-                    <InventoryTable
-                        data={weapons}
-                        signalItemChange={this.props.signalItemChange}
-                        refreshQtyCounter={this.state.refreshQtyCounter}
-                    />
-                </CollapsingSection>
-                <CollapsingSection title={adv_gear.category}>
-                    <InventoryTable
-                        data={adv_gear}
-                        signalItemChange={this.props.signalItemChange}
-                        refreshQtyCounter={this.state.refreshQtyCounter}
-                    />
-                </CollapsingSection>
-                <CollapsingSection title={tools.category}>
-                    <InventoryTable
-                        data={tools}
-                        signalItemChange={this.props.signalItemChange}
-                        refreshQtyCounter={this.state.refreshQtyCounter}
-                    />
-                </CollapsingSection>
+                <InventorySelect categories={categories} addInventory={this.props.addInventory} />
+                {sections}
+                <button type="button" onClick={this.handleGenQuantities}>Generate Quantities</button>
             </section>
+        );
+    }
+}
+
+class InventorySelect extends React.Component {
+    constructor(props) {
+        super(props);
+        this.allCategories = {
+            "armor": "Armor",
+            "weapons": "Weapons",
+            "adv_gear": "Adventuring Gear",
+            "tools": "Tools"
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+        let val = e.target.value;
+        if (val === "" || val === "na") return false;
+
+        this.props.addInventory(val);
+    }
+
+    render() {
+        let options = [];
+        for (var key in this.allCategories) {
+            if (this.allCategories.hasOwnProperty(key) && this.props.categories.indexOf(key) === -1) {
+                options.push(<option value={key} key={key}>{this.allCategories[key]}</option>);
+            }
+        }
+
+        return (
+            <div>
+                <label htmlFor="addInventory">Add new inventory type: </label>
+                <select className="addInventory" value="na" onChange={this.handleChange}>
+                    <option value="na">---</option>
+                    {options}
+                </select>
+            </div>
         );
     }
 }

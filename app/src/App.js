@@ -6,10 +6,12 @@ import ProfileSection from "./profiles";
 import InventorySection from "./inventory";
 import { Modal } from "./utilities";
 
-const armor_default = require("./data/armor.json");
-const weapons_default = require("./data/weapons.json");
-const adv_gear_default = require("./data/adventuring_gear.json");
-const tools_default = require("./data/tools.json");
+const data_defaults = {
+    "armor": require("./data/armor.json"),
+    "weapons": require("./data/weapons.json"),
+    "adv_gear": require("./data/adventuring_gear.json"),
+    "tools": require("./data/tools.json")
+};
 
 function setDefaultValues(data) {
     let new_data = cloneDeep(data);
@@ -48,25 +50,14 @@ function setDefaultValues(data) {
 }
 
 function setProfileData(data) {
-    if ("armor" in data) {
-        data.armor = setDefaultValues(data.armor);
-    } else {
-        data.armor = setDefaultValues(cloneDeep(armor_default));
-    }
-    if ("weapons" in data) {
-        data.weapons = setDefaultValues(data.weapons);
-    } else {
-        data.weapons = setDefaultValues(cloneDeep(weapons_default));
-    }
-    if ("adv_gear" in data) {
-        data.adv_gear = setDefaultValues(data.adv_gear);
-    } else {
-        data.adv_gear = setDefaultValues(cloneDeep(adv_gear_default));
-    }
-    if ("tools" in data) {
-        data.tools = setDefaultValues(data.tools);
-    } else {
-        data.tools = setDefaultValues(cloneDeep(tools_default));
+    let categories = Object.keys(data_defaults);
+    for (let i in categories) {
+        let key = categories[i];
+        if (key in data) {
+            data[key] = setDefaultValues(data[key]);
+        // } else {
+        //     data[key] = setDefaultValues(cloneDeep(data_defaults[key]));
+        }
     }
     return data;
 }
@@ -152,6 +143,7 @@ class App extends React.Component {
         };
 
         this.handleProfileChange = this.handleProfileChange.bind(this);
+        this.handleAddInventory = this.handleAddInventory.bind(this);
         this.handleItemChange = this.handleItemChange.bind(this);
     }
 
@@ -163,6 +155,15 @@ class App extends React.Component {
             prevProfiles[profile_id] = setProfileData({});
             this.setState({currentProfile: profile_id, profileData: prevProfiles});
         }
+    }
+
+    handleAddInventory(category) {
+        let data_copy = cloneDeep(this.state.profileData);
+        let data = data_copy[this.state.currentProfile];
+        if (!(category in data)) {
+            data[category] = setDefaultValues(cloneDeep(data_defaults[category]));
+        }
+        this.setState({profileData: data_copy});
     }
 
     handleItemChange(item_id, newState) {
@@ -198,7 +199,11 @@ class App extends React.Component {
 
                 <ProfileSection signalProfileChange={this.handleProfileChange} />
 
-                <InventorySection profileData={this.state.profileData[this.state.currentProfile]} signalItemChange={this.handleItemChange} />
+                <InventorySection
+                    profileData={this.state.profileData[this.state.currentProfile]}
+                    addInventory={this.handleAddInventory}
+                    signalItemChange={this.handleItemChange}
+                />
 
                 <footer>
                     <AboutModal />
