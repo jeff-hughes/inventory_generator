@@ -233,7 +233,10 @@ class InventoryRow extends React.Component {
 
     render() {
         let data = this.props.data;
-        let money = data.cost.value.toLocaleString("en-US");
+        let money = "--";
+        if (data.cost.value !== null) {
+            money = data.cost.value.toLocaleString("en-US") + " " + data.cost.type;
+        }
 
         let name_class = "table_left_align";
         if (this.props.isSubField) {
@@ -242,18 +245,14 @@ class InventoryRow extends React.Component {
 
         let extra_cols = [];
         for (let col in this.props.extraFields) {
-            let val = "--";
-            if (data[col] !== null) {
-                val = data[col]
-            }
-            extra_cols.push(<td className="table_left_align" key={col}>{val}</td>);
+            extra_cols.push(<td className="table_left_align" key={col}>{data[col] || "--"}</td>);
         }
 
         return (
             <tr>
                 <td className={name_class}>{data.name}</td>
-                <td className="table_right_align">{money} {data.cost.type}</td>
-                <td className="table_right_align">{data.weight}</td>
+                <td className="table_right_align">{money}</td>
+                <td className="table_right_align">{data.weight || "--"}</td>
                 <td className="table_right_align">
                     <input type="text" className="inventory_prob_field" value={data.prob} onChange={this.handleFloat} />
                 </td>
