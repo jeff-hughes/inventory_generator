@@ -1,6 +1,5 @@
 import React from 'react';
-import { cloneDeep } from "lodash";
-import { CollapsingSection } from "./utilities";
+import { CollapsingSection } from "./helpers";
 
 class InventorySection extends React.Component {
     constructor(props) {

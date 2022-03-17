@@ -4,7 +4,7 @@ import "./App.css";
 
 import ProfileSection from "./profiles";
 import InventorySection from "./inventory";
-import { Modal } from "./utilities";
+import { Modal } from "./helpers";
 
 const data_defaults = {
     "armor": require("./data/armor.json"),
@@ -95,6 +95,7 @@ class App extends React.Component {
 
         this.handleProfileChange = this.handleProfileChange.bind(this);
         this.handleProfileTitleChange = this.handleProfileTitleChange.bind(this);
+        this.handleDeleteProfile = this.handleDeleteProfile.bind(this);
         this.handleAddInventory = this.handleAddInventory.bind(this);
         this.handleItemChange = this.handleItemChange.bind(this);
     }
@@ -131,6 +132,51 @@ class App extends React.Component {
         prevProfiles[this.state.currentProfile] = new_title;
         localStorage.setItem("profileIndex", JSON.stringify(prevProfiles));
         this.setState({profileIndex: prevProfiles});
+    }
+
+    handleDeleteProfile() {
+        let profileIds = Object.keys(this.state.profileIndex);
+        let profileNum = profileIds.indexOf(this.state.currentProfile);
+
+        if (profileIds.length > 1) {
+            let newProfileId;
+            if (profileNum > 0) {
+                // jump to previous profile in the list, whatever it is
+                newProfileId = profileIds[profileNum - 1];
+            } else {
+                // jump to next profile instead
+                newProfileId = profileIds[profileNum + 1];
+            }
+
+            let prevProfileIndex = cloneDeep(this.state.profileIndex);
+            delete prevProfileIndex[this.state.currentProfile];
+            let prevProfileData = cloneDeep(this.state.profileData);
+            delete prevProfileData[this.state.currentProfile];
+
+            if (!(newProfileId in this.state.profileData)) {
+                prevProfileData[newProfileId] = JSON.parse(localStorage.getItem(newProfileId)) || {};
+            }
+
+            localStorage.setItem("profileIndex", JSON.stringify(prevProfileIndex));
+            localStorage.removeItem(this.state.currentProfile);
+            this.setState({currentProfile: newProfileId, profileIndex: prevProfileIndex, profileData: prevProfileData});
+
+        } else {
+            // this is the only profile; we delete the current data,
+            // but also create a fresh profile so we're never left
+            // without any profile to work with
+            let currProfile = this.state.currentProfile;
+            let newProfile = "profile1";
+            let profData = {};
+            let profileIndex = {profile1: "Profile 1"};
+            profData[newProfile] = setProfileData({});
+
+            localStorage.removeItem(currProfile);
+            localStorage.setItem("profileIndex", JSON.stringify(profileIndex));
+            localStorage.setItem(newProfile, JSON.stringify({}));
+
+            this.setState({currentProfile: currProfile, profileIndex: profileIndex, profileData: profData});
+        }
     }
 
     handleAddInventory(category) {
@@ -180,6 +226,7 @@ class App extends React.Component {
                     currentProfile={this.state.currentProfile}
                     changeProfile={this.handleProfileChange}
                     changeProfileTitle={this.handleProfileTitleChange}
+                    deleteProfile={this.handleDeleteProfile}
                 />
                 <hr />
 

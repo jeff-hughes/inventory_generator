@@ -11,6 +11,7 @@ function ProfileSection(props) {
             <ProfileTitle
                 title={props.profileIndex[props.currentProfile]}
                 changeProfileTitle={props.changeProfileTitle}
+                deleteProfile={props.deleteProfile}
             />
         </section>
     );
@@ -62,6 +63,7 @@ class ProfileTitle extends React.Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     handleChange(e) {
@@ -69,11 +71,16 @@ class ProfileTitle extends React.Component {
         this.props.changeProfileTitle(val);
     }
 
+    handleDelete(e) {
+        e.preventDefault();
+        this.props.deleteProfile();
+    }
+
     render() {
         return (
             <div className="profile_title_container">
                 <input type="text" className="profile_title" value={this.props.title} onChange={this.handleChange} />
-                <a href="#" className="profile_delete delete_icon" title="Delete profile">&times;</a>
+                <a href="#" className="profile_delete delete_icon" title="Delete profile" onClick={this.handleDelete}>&times;</a>
             </div>
         );
     }
