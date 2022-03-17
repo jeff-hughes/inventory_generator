@@ -55,106 +55,82 @@ function setProfileData(data) {
         let key = categories[i];
         if (key in data) {
             data[key] = setDefaultValues(data[key]);
-        // } else {
-        //     data[key] = setDefaultValues(cloneDeep(data_defaults[key]));
         }
     }
     return data;
 }
 
-var test_profile_data = {
-    "profile1": {
-        "armor": {
-            "id": "armor",
-            "category": "Armor",
-            "items": [
-                {"id": "armor|0", "name": "Light Armor", "items": [
-                    {"id": "armor|0|0", "name": "Padded", "cost": {"value": 5, "type": "gp"}, "weight": "8 lb.", "ac": "11 + Dex mod", "strength": null, "stealth": "Disadvantage", "prob": 0.3, "min_qty": 1, "max_qty": 3},
-                    {"id": "armor|0|1", "name": "Leather", "cost": {"value": 10, "type": "gp"}, "weight": "10 lb.", "ac": "11 + Dex mod", "strength": null, "stealth": null, "prob": 0.3, "min_qty": 1, "max_qty": 3},
-                    {"id": "armor|0|2", "name": "Studded leather", "cost": {"value": 45, "type": "gp"}, "weight": "13 lb.", "ac": "12 + Dex mod", "strength": null, "stealth": null, "prob": 0.3, "min_qty": 1, "max_qty": 3}
-                ]},
-                {"id": "armor|1", "name": "Medium Armor", "items": [
-                    {"id": "armor|1|0", "name": "Hide", "cost": {"value": 10, "type": "gp"}, "weight": "12 lb.", "ac": "12 + Dex mod (max 2)", "strength": null, "stealth": null, "prob": 0.3, "min_qty": 1, "max_qty": 3},
-                    {"id": "armor|1|1", "name": "Chain shirt", "cost": {"value": 50, "type": "gp"}, "weight": "20 lb.", "ac": "13 + Dex mod (max 2)", "strength": null, "stealth": null, "prob": 0.3, "min_qty": 1, "max_qty": 3},
-                    {"id": "armor|1|2", "name": "Scale mail", "cost": {"value": 50, "type": "gp"}, "weight": "45 lb.", "ac": "14 + Dex mod (max 2)", "strength": null, "stealth": "Disadvantage", "prob": 0.3, "min_qty": 1, "max_qty": 3},
-                    {"id": "armor|1|3", "name": "Breastplate", "cost": {"value": 400, "type": "gp"}, "weight": "20 lb.", "ac": "14 + Dex mod (max 2)", "strength": null, "stealth": null, "prob": 0.3, "min_qty": 1, "max_qty": 3},
-                    {"id": "armor|1|4", "name": "Half plate", "cost": {"value": 750, "type": "gp"}, "weight": "40 lb.", "ac": "15 + Dex mod (max 2)", "strength": null, "stealth": "Disadvantage", "prob": 0.3, "min_qty": 1, "max_qty": 3}
-                ]},
-                {"id": "armor|2", "name": "Heavy Armor", "items": [
-                    {"id": "armor|2|0", "name": "Ring mail", "cost": {"value": 30, "type": "gp"}, "weight": "40 lb.", "ac": "14", "strength": null, "stealth": "Disadvantage", "prob": 0.3, "min_qty": 1, "max_qty": 3},
-                    {"id": "armor|2|1", "name": "Chain mail", "cost": {"value": 75, "type": "gp"}, "weight": "55 lb.", "ac": "16", "strength": "Str 13", "stealth": "Disadvantage", "prob": 0.3, "min_qty": 1, "max_qty": 3},
-                    {"id": "armor|2|2", "name": "Splint", "cost": {"value": 200, "type": "gp"}, "weight": "60 lb.", "ac": "17", "strength": "Str 15", "stealth": "Disadvantage", "prob": 0.3, "min_qty": 1, "max_qty": 3},
-                    {"id": "armor|2|3", "name": "Plate", "cost": {"value": 1500, "type": "gp"}, "weight": "65 lb.", "ac": "18", "strength": "Str 15", "stealth": "Disadvantage", "prob": 0.3, "min_qty": 1, "max_qty": 3}
-                ]},
-                {"id": "armor|3", "name": "Shield", "items": [
-                    {"id": "armor|3|0", "name": "Shield", "cost": {"value": 10, "type": "gp"}, "weight": "6 lb.", "ac": "+2", "strength": null, "stealth": null, "prob": 0.3, "min_qty": 1, "max_qty": 3}
-                ]}
-            ],
-            "extra_fields": {"ac": "Armor Class (AC)", "strength": "Strength", "stealth": "Stealth"}
-        }
-    },
-    "profile2": {
-        "armor": {
-            "id": "armor",
-            "category": "Armor",
-            "items": [
-                {"id": "armor|0", "name": "Light Armor", "items": [
-                    {"id": "armor|0|0", "name": "Padded", "cost": {"value": 5, "type": "gp"}, "weight": "8 lb.", "ac": "11 + Dex mod", "strength": null, "stealth": "Disadvantage", "prob": 0.4, "min_qty": 2, "max_qty": 4},
-                    {"id": "armor|0|1", "name": "Leather", "cost": {"value": 10, "type": "gp"}, "weight": "10 lb.", "ac": "11 + Dex mod", "strength": null, "stealth": null, "prob": 0.4, "min_qty": 2, "max_qty": 4},
-                    {"id": "armor|0|2", "name": "Studded leather", "cost": {"value": 45, "type": "gp"}, "weight": "13 lb.", "ac": "12 + Dex mod", "strength": null, "stealth": null, "prob": 0.4, "min_qty": 2, "max_qty": 4}
-                ]},
-                {"id": "armor|1", "name": "Medium Armor", "items": [
-                    {"id": "armor|1|0", "name": "Hide", "cost": {"value": 10, "type": "gp"}, "weight": "12 lb.", "ac": "12 + Dex mod (max 2)", "strength": null, "stealth": null, "prob": 0.4, "min_qty": 2, "max_qty": 4},
-                    {"id": "armor|1|1", "name": "Chain shirt", "cost": {"value": 50, "type": "gp"}, "weight": "20 lb.", "ac": "13 + Dex mod (max 2)", "strength": null, "stealth": null, "prob": 0.4, "min_qty": 2, "max_qty": 4},
-                    {"id": "armor|1|2", "name": "Scale mail", "cost": {"value": 50, "type": "gp"}, "weight": "45 lb.", "ac": "14 + Dex mod (max 2)", "strength": null, "stealth": "Disadvantage", "prob": 0.4, "min_qty": 2, "max_qty": 4},
-                    {"id": "armor|1|3", "name": "Breastplate", "cost": {"value": 400, "type": "gp"}, "weight": "20 lb.", "ac": "14 + Dex mod (max 2)", "strength": null, "stealth": null, "prob": 0.4, "min_qty": 2, "max_qty": 4},
-                    {"id": "armor|1|4", "name": "Half plate", "cost": {"value": 750, "type": "gp"}, "weight": "40 lb.", "ac": "15 + Dex mod (max 2)", "strength": null, "stealth": "Disadvantage", "prob": 0.4, "min_qty": 2, "max_qty": 4}
-                ]},
-                {"id": "armor|2", "name": "Heavy Armor", "items": [
-                    {"id": "armor|2|0", "name": "Ring mail", "cost": {"value": 30, "type": "gp"}, "weight": "40 lb.", "ac": "14", "strength": null, "stealth": "Disadvantage", "prob": 0.4, "min_qty": 2, "max_qty": 4},
-                    {"id": "armor|2|1", "name": "Chain mail", "cost": {"value": 75, "type": "gp"}, "weight": "55 lb.", "ac": "16", "strength": "Str 13", "stealth": "Disadvantage", "prob": 0.4, "min_qty": 2, "max_qty": 4},
-                    {"id": "armor|2|2", "name": "Splint", "cost": {"value": 200, "type": "gp"}, "weight": "60 lb.", "ac": "17", "strength": "Str 15", "stealth": "Disadvantage", "prob": 0.4, "min_qty": 2, "max_qty": 4},
-                    {"id": "armor|2|3", "name": "Plate", "cost": {"value": 1500, "type": "gp"}, "weight": "65 lb.", "ac": "18", "strength": "Str 15", "stealth": "Disadvantage", "prob": 0.4, "min_qty": 2, "max_qty": 4}
-                ]},
-                {"id": "armor|3", "name": "Shield", "items": [
-                    {"id": "armor|3|0", "name": "Shield", "cost": {"value": 10, "type": "gp"}, "weight": "6 lb.", "ac": "+2", "strength": null, "stealth": null, "prob": 0.4, "min_qty": 2, "max_qty": 4}
-                ]}
-            ],
-            "extra_fields": {"ac": "Armor Class (AC)", "strength": "Strength", "stealth": "Stealth"}
-        }
-    }
-};
-
 class App extends React.Component {
     constructor(props) {
         super(props);
 
-        let prof_data = cloneDeep(test_profile_data);
-        console.log(prof_data);
-        let profileKeys = Object.keys(prof_data);
+        let profileIndex = JSON.parse(localStorage.getItem("profileIndex"));
+        let currProfile = "profile1";
+        let profData = {};
+        
+        if (profileIndex === null) {
+            profileIndex = {profile1: "Profile 1"};
+            profData[currProfile] = {};
+            localStorage.setItem("profileIndex", JSON.stringify(profileIndex));
+            localStorage.setItem(currProfile, JSON.stringify({}));
+        } else {
+            // retrieve data for the first profile listed
+            let profileKeys = Object.keys(profileIndex);
+            currProfile = profileKeys[0];
+            profData[currProfile] = JSON.parse(localStorage.getItem(currProfile)) || {};
+        }
+        console.log(profileIndex);
+        console.log(profData);
+        let profileKeys = Object.keys(profData);
         for (let i in profileKeys) {
             let key = profileKeys[i];
-            prof_data[key] = setProfileData(prof_data[key]);
+            profData[key] = setProfileData(profData[key]);
         }
 
         this.state = {
-            currentProfile: "profile1",
-            profileData: prof_data
+            profileIndex: profileIndex,
+            currentProfile: currProfile,
+            profileData: profData
         };
 
         this.handleProfileChange = this.handleProfileChange.bind(this);
+        this.handleProfileTitleChange = this.handleProfileTitleChange.bind(this);
         this.handleAddInventory = this.handleAddInventory.bind(this);
         this.handleItemChange = this.handleItemChange.bind(this);
     }
 
     handleProfileChange(profile_id) {
-        if (profile_id in this.state.profileData) {
+        if (profile_id !== null && profile_id in this.state.profileIndex) {
+            // change to existing profile
+            if (!(profile_id in this.state.profileData)) {
+                let prevProfileData = cloneDeep(this.state.profileData);
+                prevProfileData[profile_id] = JSON.parse(localStorage.getItem(profile_id)) || {};
+                this.setState({profileData: prevProfileData});
+            }
             this.setState({currentProfile: profile_id});
         } else {
-            let prevProfiles = this.state.profileData;
-            prevProfiles[profile_id] = setProfileData({});
-            this.setState({currentProfile: profile_id, profileData: prevProfiles});
+            // create new profile
+            let prevProfiles = this.state.profileIndex;
+            let prevProfileData = this.state.profileData;
+            let num = Object.keys(prevProfiles).length + 1;
+            let new_id = "profile" + num;
+            let profile_name = "Profile " + num;
+
+            prevProfiles[new_id] = profile_name
+            prevProfileData[new_id] = setProfileData({});
+
+            localStorage.setItem("profileIndex", JSON.stringify(prevProfiles));
+            localStorage.setItem(new_id, JSON.stringify({}));
+
+            this.setState({currentProfile: new_id, profileIndex: prevProfiles, profileData: prevProfileData});
         }
+    }
+
+    handleProfileTitleChange(new_title) {
+        let prevProfiles = this.state.profileIndex;
+        prevProfiles[this.state.currentProfile] = new_title;
+        localStorage.setItem("profileIndex", JSON.stringify(prevProfiles));
+        this.setState({profileIndex: prevProfiles});
     }
 
     handleAddInventory(category) {
@@ -163,6 +139,7 @@ class App extends React.Component {
         if (!(category in data)) {
             data[category] = setDefaultValues(cloneDeep(data_defaults[category]));
         }
+        localStorage.setItem(this.state.currentProfile, JSON.stringify(data));
         this.setState({profileData: data_copy});
     }
 
@@ -189,6 +166,7 @@ class App extends React.Component {
                 data[key] = newState[key];
             });
         }
+        localStorage.setItem(this.state.currentProfile, JSON.stringify(data));
         this.setState({profileData: data_copy});
     }
 
@@ -197,7 +175,12 @@ class App extends React.Component {
             <div className="app">
                 <h2>RPG Merchant Inventory Generator</h2>
 
-                <ProfileSection signalProfileChange={this.handleProfileChange} />
+                <ProfileSection
+                    profileIndex={this.state.profileIndex}
+                    currentProfile={this.state.currentProfile}
+                    changeProfile={this.handleProfileChange}
+                    changeProfileTitle={this.handleProfileTitleChange}
+                />
 
                 <InventorySection
                     profileData={this.state.profileData[this.state.currentProfile]}
