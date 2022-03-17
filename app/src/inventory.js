@@ -19,7 +19,10 @@ class InventorySection extends React.Component {
     }
 
     render() {
-        let categories = Object.keys(this.props.profileData);
+        let categories = [];
+        if (this.props.profileData !== undefined) {
+            categories = Object.keys(this.props.profileData);
+        }
         let sections = categories.map(cat => {
             let data = this.props.profileData[cat];
             return (

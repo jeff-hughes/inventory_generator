@@ -1,10 +1,11 @@
 import React from "react";
 import { cloneDeep } from "lodash";
-import "./App.css";
+import { v4 as uuidv4 } from 'uuid';
 
 import ProfileSection from "./profiles";
 import InventorySection from "./inventory";
 import { Modal } from "./helpers";
+import "./App.css";
 
 const data_defaults = {
     "armor": require("./data/armor.json"),
@@ -65,11 +66,12 @@ class App extends React.Component {
         super(props);
 
         let profileIndex = JSON.parse(localStorage.getItem("profileIndex"));
-        let currProfile = "profile1";
+        let currProfile = uuidv4();
         let profData = {};
         
         if (profileIndex === null) {
-            profileIndex = {profile1: "Profile 1"};
+            profileIndex = {}
+            profileIndex[currProfile] = "Profile 1";
             profData[currProfile] = {};
             localStorage.setItem("profileIndex", JSON.stringify(profileIndex));
             localStorage.setItem(currProfile, JSON.stringify({}));
@@ -115,7 +117,7 @@ class App extends React.Component {
             let prevProfiles = this.state.profileIndex;
             let prevProfileData = this.state.profileData;
             let num = Object.keys(prevProfiles).length + 1;
-            let new_id = "profile" + num;
+            let new_id = uuidv4();
             let profile_name = "Profile " + num;
 
             prevProfiles[new_id] = profile_name
@@ -167,9 +169,10 @@ class App extends React.Component {
             // but also create a fresh profile so we're never left
             // without any profile to work with
             let currProfile = this.state.currentProfile;
-            let newProfile = "profile1";
+            let newProfile = uuidv4();
             let profData = {};
-            let profileIndex = {profile1: "Profile 1"};
+            let profileIndex = {};
+            profileIndex[newProfile] = "Profile 1";
             profData[newProfile] = setProfileData({});
 
             localStorage.removeItem(currProfile);
