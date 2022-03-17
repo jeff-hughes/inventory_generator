@@ -169,17 +169,15 @@ class App extends React.Component {
             // but also create a fresh profile so we're never left
             // without any profile to work with
             let currProfile = this.state.currentProfile;
-            let newProfile = uuidv4();
             let profData = {};
             let profileIndex = {};
-            profileIndex[newProfile] = "Profile 1";
-            profData[newProfile] = setProfileData({});
+            profileIndex[currProfile] = "Profile 1";
+            profData[currProfile] = setProfileData({});
 
-            localStorage.removeItem(currProfile);
             localStorage.setItem("profileIndex", JSON.stringify(profileIndex));
-            localStorage.setItem(newProfile, JSON.stringify({}));
+            localStorage.setItem(currProfile, JSON.stringify({}));
 
-            this.setState({currentProfile: currProfile, profileIndex: profileIndex, profileData: profData});
+            this.setState({profileIndex: profileIndex, profileData: profData});
         }
     }
 
