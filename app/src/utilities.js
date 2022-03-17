@@ -10,10 +10,13 @@ export function CollapsingSection(props) {
     }
     return (
         <div className="collapsing_section">
-            <div className="collapsing_header"><h3><a href="#" onClick={(e) => {
+            <div className="collapsing_header">
+                <h3><a href="#" onClick={(e) => {
                 e.preventDefault();
                 if (isCollapsed === true) setCollapsed(false); else setCollapsed(true);
-            }}>{plus} {props.title}</a></h3></div>
+            }}>{plus} {props.title}</a></h3>
+                <a href="#" className="section_delete delete_icon" title="Delete section">&times;</a>
+            </div>
             <div className={clss}>
                 {props.children}
             </div>

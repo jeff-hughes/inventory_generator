@@ -181,6 +181,7 @@ class App extends React.Component {
                     changeProfile={this.handleProfileChange}
                     changeProfileTitle={this.handleProfileTitleChange}
                 />
+                <hr />
 
                 <InventorySection
                     profileData={this.state.profileData[this.state.currentProfile]}

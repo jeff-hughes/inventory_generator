@@ -71,8 +71,9 @@ class ProfileTitle extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="profile_title_container">
                 <input type="text" className="profile_title" value={this.props.title} onChange={this.handleChange} />
+                <a href="#" className="profile_delete delete_icon" title="Delete profile">&times;</a>
             </div>
         );
     }

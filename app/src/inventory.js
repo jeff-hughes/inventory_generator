@@ -37,7 +37,7 @@ class InventorySection extends React.Component {
             <section className="inventory_section">
                 <InventorySelect categories={categories} addInventory={this.props.addInventory} />
                 {sections}
-                <button type="button" onClick={this.handleGenQuantities}>Generate Quantities</button>
+                <button type="button" className="inventory_gen_qty" onClick={this.handleGenQuantities}>Generate Quantities</button>
             </section>
         );
     }
@@ -71,9 +71,9 @@ class InventorySelect extends React.Component {
         }
 
         return (
-            <div>
-                <label htmlFor="addInventory">Add new inventory type: </label>
-                <select className="addInventory" value="na" onChange={this.handleChange}>
+            <div className="inventory_select">
+                <label htmlFor="add_inventory">Add new inventory section:</label>
+                <select className="add_inventory" value="na" onChange={this.handleChange}>
                     <option value="na">---</option>
                     {options}
                 </select>
@@ -121,7 +121,6 @@ function InventoryTable(props) {
 
     return (
         <div className="inventory_container">
-            <h3>{data.category}</h3>
             <table className="inventory_table">
                 <thead>
                     <tr>

@@ -1,10 +1,49 @@
 .profiles_section {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 
-.collapsing_header a {
+.profile_title_container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.profile_title {
+    font-size: 150%;
+    padding: 10px 5px;
+    flex-grow: 1;
+}
+
+.profile_delete {
+    width: 1em;
+}
+
+.collapsing_header h3 {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.collapsing_header h3 a {
     color: #000;
     text-decoration: none;
+}
+
+.collapsing_header .section_delete {
+    position: relative;
+    top: 4px;
+}
+
+.inventory_gen_qty {
+    margin-top: 1em;
+}
+
+.inventory_select {
+    margin-bottom: 1em;
+}
+
+.inventory_select .add_inventory {
+    display: block;
 }
 
 .inventory_table {
@@ -92,4 +131,10 @@ footer {
 
 .modal p {
     margin-top: 0;
+}
+
+.delete_icon {
+    color: #c00;
+    font-size: 150%;
+    text-decoration: none;
 }
