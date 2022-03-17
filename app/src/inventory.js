@@ -208,10 +208,12 @@ class InventoryRow extends React.Component {
     }
 
     generateQty() {
-        if (this.props.prob !== "" && this.props.min_qty !== "" && this.props.max_qty !== "") {
+        let data = this.props.data;
+        if (data.prob !== "" && data.min_qty !== "" && data.max_qty !== "") {
+
             let rand = Math.random();
-            if (rand < this.props.prob) {
-                let qty = Math.floor(Math.random() * (this.props.max_qty - this.props.min_qty + 1) + this.props.min_qty);
+            if (rand < data.prob) {
+                let qty = Math.floor(Math.random() * (data.max_qty - data.min_qty + 1) + data.min_qty);
                 this.setState({qty: qty});
             } else {
                 this.setState({qty: 0});
