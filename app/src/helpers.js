@@ -15,7 +15,7 @@ export function CollapsingSection(props) {
                 e.preventDefault();
                 if (isCollapsed === true) setCollapsed(false); else setCollapsed(true);
             }}>{plus} {props.title}</a></h3>
-                <a href="#" className="section_delete delete_icon" title="Delete section">&times;</a>
+                <a href="#" className="section_delete delete_icon" title="Delete section" onClick={() => props.deleteSection(props.id)}>&times;</a>
             </div>
             <div className={clss}>
                 {props.children}

@@ -97,6 +97,7 @@ class App extends React.Component {
         this.handleProfileTitleChange = this.handleProfileTitleChange.bind(this);
         this.handleDeleteProfile = this.handleDeleteProfile.bind(this);
         this.handleAddInventory = this.handleAddInventory.bind(this);
+        this.handleDeleteInventory = this.handleDeleteInventory.bind(this);
         this.handleItemChange = this.handleItemChange.bind(this);
     }
 
@@ -189,6 +190,16 @@ class App extends React.Component {
         this.setState({profileData: data_copy});
     }
 
+    handleDeleteInventory(category) {
+        let data_copy = cloneDeep(this.state.profileData);
+        let data = data_copy[this.state.currentProfile];
+        if (category in data) {
+            delete data[category];
+            localStorage.setItem(this.state.currentProfile, JSON.stringify(data));
+            this.setState({profileData: data_copy});
+        }
+    }
+
     handleItemChange(item_id, newState) {
         let addr_split = item_id.split("|");
         let data_copy = cloneDeep(this.state.profileData);
@@ -233,6 +244,7 @@ class App extends React.Component {
                 <InventorySection
                     profileData={this.state.profileData[this.state.currentProfile]}
                     addInventory={this.handleAddInventory}
+                    deleteInventory={this.handleDeleteInventory}
                     signalItemChange={this.handleItemChange}
                 />
 

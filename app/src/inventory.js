@@ -23,7 +23,12 @@ class InventorySection extends React.Component {
         let sections = categories.map(cat => {
             let data = this.props.profileData[cat];
             return (
-                <CollapsingSection title={data.category} key={cat}>
+                <CollapsingSection
+                    id={cat}
+                    title={data.category}
+                    deleteSection={this.props.deleteInventory}
+                    key={cat}
+                >
                     <InventoryTable
                         data={data}
                         signalItemChange={this.props.signalItemChange}
