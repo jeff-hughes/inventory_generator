@@ -1,89 +1,73 @@
 import React from "react";
+import { GlobalDataContext } from "./global_data";
 
 function ProfileSection(props) {
     return (
         <section className="profiles_section">
-            <ProfileSelect
-                options={props.profileIndex}
-                selected={props.currentProfile}
-                changeProfile={props.changeProfile}
-            />
-            <ProfileTitle
-                title={props.profileIndex[props.currentProfile]}
-                changeProfileTitle={props.changeProfileTitle}
-                deleteProfile={props.deleteProfile}
-            />
+            <ProfileSelect />
+            <ProfileTitle />
         </section>
     );
 }
 
+function ProfileSelect() {
+    const [ global_state, dispatch ] = React.useContext(GlobalDataContext);
 
-class ProfileSelect extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(e) {
-        let val = e.target.value;
-        if (val === "") return false;
-
-        if (val == "create_new") {
-            this.props.changeProfile(null);
-        } else {
-            this.props.changeProfile(val);
-        }
-    }
-
-    render() {
-        let options = [];
-        for (var key in this.props.options) {
-            if (this.props.options.hasOwnProperty(key)) {
-                let title = this.props.options[key];
-                if (title === "") {
-                    title = "(no title)";
-                }
-                options.push(<option value={key} key={key}>{title}</option>);
+    let options = [];
+    let profileIndex = global_state.profileIndex;
+    for (var key in profileIndex) {
+        if (profileIndex.hasOwnProperty(key)) {
+            let title = profileIndex[key];
+            if (title === "") {
+                title = "(no title)";
             }
+            options.push(<option value={key} key={key}>{title}</option>);
         }
-
-        return (
-            <div>
-                <label htmlFor="profiles">Profiles: </label>
-                <select className="profiles" value={this.props.selected} onChange={this.handleChange}>
-                    {options}
-                    <option value="create_new">Create new profile...</option>
-                </select>
-            </div>
-        );
-    }
-}
-
-class ProfileTitle extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
     }
 
-    handleChange(e) {
-        let val = e.target.value;
-        this.props.changeProfileTitle(val);
-    }
+    return (
+        <div>
+            <label htmlFor="profiles">Profiles: </label>
+            <select className="profiles" value={global_state.currentProfile} onChange={(e) => {
+                let val = e.target.value;
+                if (val === "") return false;
+        
+                if (val == "create_new") {
+                    val = null;
+                }
+                dispatch({
+                    "action": "change_profile",
+                    "profile_id": val
+                });
+            }}>
+                {options}
+                <option value="create_new">Create new profile...</option>
+            </select>
+        </div>
+    );
+};
 
-    handleDelete(e) {
-        e.preventDefault();
-        this.props.deleteProfile();
-    }
+function ProfileTitle() {
+    const [ global_state, dispatch ] = React.useContext(GlobalDataContext);
 
-    render() {
-        return (
-            <div className="profile_title_container">
-                <input type="text" className="profile_title" value={this.props.title} onChange={this.handleChange} />
-                <a href="#" className="profile_delete delete_icon" title="Delete profile" onClick={this.handleDelete}>&times;</a>
-            </div>
-        );
-    }
-}
+    let title = global_state.profileIndex[global_state.currentProfile];
+    return (
+        <div className="profile_title_container">
+            <input type="text" className="profile_title" value={title} onChange={(e) => {
+                let val = e.target.value;
+                dispatch({
+                    "action": "change_profile_title",
+                    "new_title": val
+                });
+            }} />
+            <a href="#" className="profile_delete delete_icon" title="Delete profile" onClick={(e) => {
+                e.preventDefault();
+                dispatch({
+                    "action": "delete_profile"
+                });
+            }}>&times;</a>
+        </div>
+    );
+};
 
 export default ProfileSection;

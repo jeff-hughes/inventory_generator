@@ -1,7 +1,9 @@
 import React from 'react';
+import { GlobalDataContext } from "./global_data";
 import { CollapsingSection } from "./helpers";
 
 class InventorySection extends React.Component {
+    static contextType = GlobalDataContext;
     constructor(props) {
         super(props);
 
@@ -19,27 +21,38 @@ class InventorySection extends React.Component {
     }
 
     render() {
-        let categories = Object.keys(this.props.profileData);
-        let sections = categories.map(cat => {
-            let data = this.props.profileData[cat];
-            return (
-                <CollapsingSection
-                    id={cat}
-                    title={data.category}
-                    deleteSection={this.props.deleteInventory}
-                    key={cat}
-                >
-                    <InventoryTable
-                        data={data}
-                        signalItemChange={this.props.signalItemChange}
-                        refreshQtyCounter={this.state.refreshQtyCounter}
-                    />
-                </CollapsingSection>
-            );
+        let [ global_state, dispatch ] = this.context;
+        let profileData = global_state.profileData[global_state.currentProfile] || {};
+        let categories = Object.keys(profileData);
+
+        let sections = Object.keys(global_state.allCategories).map(cat => {
+            if (global_state.allCategories.hasOwnProperty(cat) && categories.indexOf(cat) !== -1) {
+                let data = profileData[cat];
+                return (
+                    <CollapsingSection
+                        id={cat}
+                        title={data.category}
+                        deleteSection={() => {
+                            console.log(cat);
+                            dispatch({
+                            "action": "delete_inventory",
+                            "category": cat})
+                        }
+                        }
+                        key={cat}
+                    >
+                        <InventoryTable
+                            data={data}
+                            refreshQtyCounter={this.state.refreshQtyCounter}
+                        />
+                    </CollapsingSection>
+                );
+            }
         });
+
         return (
             <section className="inventory_section">
-                <InventorySelect categories={categories} addInventory={this.props.addInventory} />
+                <InventorySelect categories={categories} />
                 {sections}
                 <button type="button" className="inventory_gen_qty" onClick={this.handleGenQuantities}>Generate Quantities</button>
             </section>
@@ -48,14 +61,9 @@ class InventorySection extends React.Component {
 }
 
 class InventorySelect extends React.Component {
+    static contextType = GlobalDataContext;
     constructor(props) {
         super(props);
-        this.allCategories = {
-            "armor": "Armor",
-            "weapons": "Weapons",
-            "adv_gear": "Adventuring Gear",
-            "tools": "Tools"
-        };
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -63,14 +71,18 @@ class InventorySelect extends React.Component {
         let val = e.target.value;
         if (val === "" || val === "na") return false;
 
-        this.props.addInventory(val);
+        this.context[1]({
+            "action": "add_inventory",
+            "category": val,
+        });
     }
 
     render() {
+        let global_state = this.context[0];
         let options = [];
-        for (var key in this.allCategories) {
-            if (this.allCategories.hasOwnProperty(key) && this.props.categories.indexOf(key) === -1) {
-                options.push(<option value={key} key={key}>{this.allCategories[key]}</option>);
+        for (var key in global_state.allCategories) {
+            if (global_state.allCategories.hasOwnProperty(key) && this.props.categories.indexOf(key) === -1) {
+                options.push(<option value={key} key={key}>{global_state.allCategories[key]}</option>);
             }
         }
 
@@ -98,7 +110,6 @@ function InventoryTable(props) {
             return (<InventoryCategory
                 data={item}
                 extraFields={extra_fields}
-                signalItemChange={props.signalItemChange}
                 refreshQtyCounter={props.refreshQtyCounter}
                 key={index}
             />);
@@ -108,7 +119,6 @@ function InventoryTable(props) {
                     <InventoryRow
                         data={item}
                         extraFields={extra_fields}
-                        signalItemChange={props.signalItemChange}
                         refreshQtyCounter={props.refreshQtyCounter}
                     />
                 </tbody>
@@ -153,7 +163,6 @@ function InventoryCategory(props) {
             data={subitem}
             extraFields={props.extraFields}
             isSubField={true}
-            signalItemChange={props.signalItemChange}
             refreshQtyCounter={props.refreshQtyCounter}
             key={subindex}
         />);
@@ -167,6 +176,7 @@ function InventoryCategory(props) {
 }
 
 class InventoryRow extends React.Component {
+    static contextType = GlobalDataContext;
     constructor(props) {
         super(props);
 
@@ -185,11 +195,19 @@ class InventoryRow extends React.Component {
 
         // allow empty values
         if (str === "") {
-            this.props.signalItemChange(this.props.data.id, {prob: str});
+            this.context[1]({
+                "action": "change_item",
+                "item_id": this.props.data.id,
+                "new_state": {prob: str}
+            });
         }
         // ensure value is valid number between 0 and 1
         else if (!isNaN(str) && !isNaN(flt) && flt >= 0.0 && flt <= 1.0) {
-            this.props.signalItemChange(this.props.data.id, {prob: flt});
+            this.context[1]({
+                "action": "change_item",
+                "item_id": this.props.data.id,
+                "new_state": {prob: flt}
+            });
         }
     }
 
@@ -202,12 +220,20 @@ class InventoryRow extends React.Component {
         // allow empty values
         if (str === "") {
             state_obj[state_val] = str;
-            this.props.signalItemChange(this.props.data.id, state_obj);
+            this.context[1]({
+                "action": "change_item",
+                "item_id": this.props.data.id,
+                "new_state": state_obj
+            });
         }
         // ensure value is valid integer greater/equal to 0
         else if (!isNaN(str) && !isNaN(int) && int >= 0) {
             state_obj[state_val] = int;
-            this.props.signalItemChange(this.props.data.id, state_obj);
+            this.context[1]({
+                "action": "change_item",
+                "item_id": this.props.data.id,
+                "new_state": state_obj
+            });
         }
     }
 
