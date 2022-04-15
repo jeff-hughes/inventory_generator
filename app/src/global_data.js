@@ -53,7 +53,36 @@ function setDefaultValues(data) {
     return new_data;
 }
 
-function setProfileData(data) {
+function saveProfileData(profile_id, data) {
+    let new_data = cloneDeep(data);
+    let categories = Object.keys(data_defaults);
+    for (let i in categories) {
+        let key = categories[i];
+        if (key in new_data) {
+            let new_items = new_data[key].items.map(item => {
+                let new_item = cloneDeep(item);
+                if ("items" in new_item) {
+                    let subitems = new_item.items.map(subitem => {
+                        let new_subitem = cloneDeep(subitem);
+                        // don't save qty information in local storage
+                        delete new_subitem["qty"];
+                        return new_subitem;
+                    });
+                    new_item.items = subitems;
+                } else {
+                    // don't save qty information in local storage
+                    delete new_item["qty"];
+                }
+                return new_item;
+            });
+            new_data[key].items = new_items;
+        }
+    }
+    localStorage.setItem(profile_id, JSON.stringify(new_data));
+}
+
+function retrieveProfileData(profile_id) {
+    let data = JSON.parse(localStorage.getItem(profile_id)) || {};
     let categories = Object.keys(data_defaults);
     for (let i in categories) {
         let key = categories[i];
@@ -74,18 +103,18 @@ function createInitialState() {
         profileIndex[currProfile] = "Profile 1";
         profData[currProfile] = {};
         localStorage.setItem("profileIndex", JSON.stringify(profileIndex));
-        localStorage.setItem(currProfile, JSON.stringify({}));
+        saveProfileData(currProfile, {});
     } else {
         // retrieve data for the first profile listed
         let profileKeys = Object.keys(profileIndex);
         currProfile = profileKeys[0];
-        profData[currProfile] = JSON.parse(localStorage.getItem(currProfile)) || {};
+        profData[currProfile] = retrieveProfileData(currProfile);
     }
-    let profileKeys = Object.keys(profData);
-    for (let i in profileKeys) {
-        let key = profileKeys[i];
-        profData[key] = setProfileData(profData[key]);
-    }
+    // let profileKeys = Object.keys(profData);
+    // for (let i in profileKeys) {
+    //     let key = profileKeys[i];
+    //     profData[key] = getProfileData(key);
+    // }
     let state = {
         allCategories: allCategories,
         profileIndex: profileIndex,
@@ -118,7 +147,7 @@ const reducer = (state, action) => {
             if (action.profile_id !== null && action.profile_id in state.profileIndex) {
                 // change to existing profile
                 if (!(action.profile_id in new_state.profileData)) {
-                    new_state.profileData[action.profile_id] = JSON.parse(localStorage.getItem(action.profile_id)) || {};
+                    new_state.profileData[action.profile_id] = retrieveProfileData(action.profile_id);
                 }
                 new_state.currentProfile = action.profile_id;
             } else {
@@ -128,11 +157,11 @@ const reducer = (state, action) => {
                 let profile_name = "Profile " + num;
     
                 new_state.profileIndex[new_id] = profile_name
-                new_state.profileData[new_id] = setProfileData({});
+                new_state.profileData[new_id] = retrieveProfileData(new_id);
                 new_state.currentProfile = new_id;
     
                 localStorage.setItem("profileIndex", JSON.stringify(new_state.profileIndex));
-                localStorage.setItem(new_id, JSON.stringify({}));
+                saveProfileData(new_id, {});
             }
             break;
         }
@@ -168,7 +197,7 @@ const reducer = (state, action) => {
                 delete profileData[state.currentProfile];
 
                 if (!(newProfileId in state.profileData)) {
-                    profileData[newProfileId] = JSON.parse(localStorage.getItem(newProfileId)) || {};
+                    profileData[newProfileId] = retrieveProfileData(newProfileId);
                 }
 
                 localStorage.setItem("profileIndex", JSON.stringify(profileIndex));
@@ -186,10 +215,10 @@ const reducer = (state, action) => {
                 let profileData = {};
                 let profileIndex = {};
                 profileIndex[currProfile] = "Profile 1";
-                profileData[currProfile] = setProfileData({});
+                profileData[currProfile] = retrieveProfileData("nonexistent");
 
                 localStorage.setItem("profileIndex", JSON.stringify(profileIndex));
-                localStorage.setItem(currProfile, JSON.stringify({}));
+                saveProfileData(currProfile, {});
 
                 new_state.profileIndex = profileIndex;
                 new_state.profileData = profileData;
@@ -204,7 +233,7 @@ const reducer = (state, action) => {
             if (!(action.category in data)) {
                 data[action.category] = setDefaultValues(cloneDeep(data_defaults[action.category]));
             }
-            localStorage.setItem(state.currentProfile, JSON.stringify(data));
+            saveProfileData(state.currentProfile, data);
             new_state = {...state, profileData: data_copy};
             break;
         }
@@ -215,7 +244,7 @@ const reducer = (state, action) => {
             let data = data_copy[state.currentProfile];
             if (action.category in data) {
                 delete data[action.category];
-                localStorage.setItem(state.currentProfile, JSON.stringify(data));
+                saveProfileData(state.currentProfile, data);
                 new_state = {...state, profileData: data_copy};
             }
             break;
@@ -245,7 +274,7 @@ const reducer = (state, action) => {
                     data[key] = action.new_state[key];
                 });
             }
-            localStorage.setItem(state.currentProfile, JSON.stringify(data));
+            saveProfileData(state.currentProfile, data_copy[state.currentProfile]);
             new_state = {...state, profileData: data_copy};
             break;
         }

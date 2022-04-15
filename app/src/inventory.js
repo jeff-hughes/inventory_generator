@@ -240,14 +240,16 @@ class InventoryRow extends React.Component {
     generateQty() {
         let data = this.props.data;
         if (data.prob !== "" && data.min_qty !== "" && data.max_qty !== "") {
-
+            let qty = 0;
             let rand = Math.random();
             if (rand < data.prob) {
-                let qty = Math.floor(Math.random() * (data.max_qty - data.min_qty + 1) + data.min_qty);
-                this.setState({qty: qty});
-            } else {
-                this.setState({qty: 0});
+                qty = Math.floor(Math.random() * (data.max_qty - data.min_qty + 1) + data.min_qty);
             }
+            this.context[1]({
+                "action": "change_item",
+                "item_id": this.props.data.id,
+                "new_state": {qty: qty}
+            });
         }
     }
 
@@ -289,7 +291,7 @@ class InventoryRow extends React.Component {
                     <input type="text" className="inventory_max_qty_field" value={data.max_qty} data-field="max_qty" onChange={this.handleInt} />
                 </td>
                 <td className="table_right_align">
-                    {this.state.qty}
+                    {data.qty}
                 </td>
                 {extra_cols}
             </tr>
